@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musical.Web", "Musical.Web\Musical.Web.csproj", "{4721CA02-D269-4D7C-852B-097548C6504D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musical.Common", "Musical.Common\Musical.Common.csproj", "{26317278-47C6-4352-A3A4-E27950AF3243}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4721CA02-D269-4D7C-852B-097548C6504D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4721CA02-D269-4D7C-852B-097548C6504D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4721CA02-D269-4D7C-852B-097548C6504D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4721CA02-D269-4D7C-852B-097548C6504D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26317278-47C6-4352-A3A4-E27950AF3243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26317278-47C6-4352-A3A4-E27950AF3243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26317278-47C6-4352-A3A4-E27950AF3243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26317278-47C6-4352-A3A4-E27950AF3243}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F06C744B-00DB-492E-8B90-3454BE646BAE}
+	EndGlobalSection
+EndGlobal
