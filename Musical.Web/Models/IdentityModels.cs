@@ -31,5 +31,7 @@ namespace Musical.Web.Models
         }
 
 
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

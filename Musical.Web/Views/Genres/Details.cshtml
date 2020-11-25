@@ -1,0 +1,48 @@
+﻿@model Musical.Web.Models.Genre
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="row justify-content-center">
+    
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div class="col-md-12">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Artista</th>
+                <th>Lugar</th>
+                <th>Fecha</th>
+                <th>Genero</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Events)
+            {
+            <tr>
+                <th>@item.Artist</th>
+                <th>@item.Place</th>
+                <th>@item.DateTime</th>
+                <th>@Model.Name</th>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
