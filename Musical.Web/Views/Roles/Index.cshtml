@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Musical.Web.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Roles";
+}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card mt-5">
+                <div class="card-header bg-principal">
+                    <h4 class="m-1 text-white">Lista de Usuarios</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-sm">
+                        <tr>
+                            <td>Item</td>
+                            <td>UserName</td>
+                            <td>Email</td>
+                            <td>Add Rol</td>
+                        </tr>
+                        @{ 
+                            int count = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.UserName</td>
+                                <td>@item.Email</td>
+                                <td><a href="@Url.Action("AddRoles","Roles",new { id=item.Id})">Add</a></td>
+                            </tr>
+                            count++;
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>

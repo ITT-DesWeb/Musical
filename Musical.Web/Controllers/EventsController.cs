@@ -11,103 +11,112 @@ using Musical.Web.Models;
 namespace Musical.Web.Controllers
 {
     [Authorize]
-    public class GenresController : Controller
+    public class EventsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Genres
+        // GET: Events
         public ActionResult Index()
         {
-            return View(db.Genres.ToList());
+            var events = db.Events.Include(a => a.Genre);
+            return View(events.ToList());
         }
 
-        // GET: Genres/Details/5
+        // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genre genre = db.Genres.Include(a => a.Events).Where(a=>a.Id==id).SingleOrDefault();
-
-            if (genre == null)
+            Event @event = db.Events.Find(id);
+            if (@event == null)
             {
                 return HttpNotFound();
             }
-            return View(genre);
+            return View(@event);
         }
 
-       
+        // GET: Events/Create
+        public ActionResult Create()
+        {
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+            return View();
+        }
 
-        // POST: Genres/Create
+        // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Genre genre)
+        public ActionResult Create([Bind(Include = "Id,DateTime,Place,GenreId")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                db.Genres.Add(genre);
+                db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(genre);
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", @event.GenreId);
+            return View(@event);
         }
 
-        // GET: Genres/Edit/5
+        // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genre genre = db.Genres.Find(id);
-            if (genre == null)
+            Event @event = db.Events.Find(id);
+            if (@event == null)
             {
                 return HttpNotFound();
             }
-            return View(genre);
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", @event.GenreId);
+            return View(@event);
         }
 
-        // POST: Genres/Edit/5
+        // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Genre genre)
+        public ActionResult Edit([Bind(Include = "Id,DateTime,Place,GenreId")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(genre).State = EntityState.Modified;
+                db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(genre);
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", @event.GenreId);
+            return View(@event);
         }
 
-        // GET: Genres/Delete/5
+        // GET: Events/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genre genre = db.Genres.Find(id);
-            if (genre == null)
+            Event @event = db.Events.Find(id);
+            if (@event == null)
             {
                 return HttpNotFound();
             }
-            return View(genre);
+            return View(@event);
         }
 
-        // POST: Genres/Delete/5
-        
+        // POST: Events/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Genre genre = db.Genres.Find(id);
-            db.Genres.Remove(genre);
+            Event @event = db.Events.Find(id);
+            db.Events.Remove(@event);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

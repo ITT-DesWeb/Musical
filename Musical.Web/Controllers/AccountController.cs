@@ -449,7 +449,7 @@ namespace Musical.Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Principal");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

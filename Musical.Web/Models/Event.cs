@@ -10,8 +10,11 @@ namespace Musical.Web.Models
     public class Event
     {
         public int Id { get; set; }
+        public string ApplicationUser { get; set; }
         [Display(Name="Artista")]
+        [ForeignKey("ApplicationUser")]
         public ApplicationUser Artist { get; set; }
+      
         [Display(Name ="Fecha del Evento")]
         public DateTime DateTime { get; set; }
         [Display(Name ="Lugar")]
@@ -19,6 +22,7 @@ namespace Musical.Web.Models
         [Display(Name ="Genero")]
         public int GenreId { get; set; }
         [ForeignKey("GenreId")]
+        [Display(Name ="Genero")]
         public Genre Genre { get; set; }
 
         

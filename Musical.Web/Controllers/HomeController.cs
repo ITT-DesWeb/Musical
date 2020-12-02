@@ -10,6 +10,10 @@ namespace Musical.Web.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index","Principal");
+            }
             return View();
         }
 
