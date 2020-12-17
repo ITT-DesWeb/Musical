@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -10,12 +11,13 @@ using Musical.Web.Models;
 
 namespace Musical.Web.Controllers
 {
-    [Authorize]
+    
     public class EventsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Events
+        [Authorize]
         public ActionResult Index()
         {
             var events = db.Events.Include(a => a.Genre);
@@ -29,7 +31,9 @@ namespace Musical.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
+            Event @event = db.Events.Include(a => a.Genre).
+                Include(a => a.Artist).Where(a => a.Id == id)
+                .FirstOrDefault();
             if (@event == null)
             {
                 return HttpNotFound();
@@ -38,9 +42,11 @@ namespace Musical.Web.Controllers
         }
 
         // GET: Events/Create
+        [Authorize]
         public ActionResult Create()
         {
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+            ViewBag.User = db.Users.ToList();
+            ViewBag.Genre = db.Genres.ToList();
             return View();
         }
 
@@ -49,20 +55,37 @@ namespace Musical.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,Place,GenreId")] Event @event)
+        [Authorize]
+        public ActionResult Create(Event @event, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                string path = Server.MapPath("~/Upload/Evento/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                
+                if (file != null)
+                {
+                    
+                    file.SaveAs(path + file.FileName);
+                    @event.Picture =  file.FileName;
+                }
+
+
+
                 db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", @event.GenreId);
+            ViewBag.User = db.Users.ToList();
+            ViewBag.Genre = db.Genres.ToList();
             return View(@event);
         }
 
         // GET: Events/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,7 +106,8 @@ namespace Musical.Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateTime,Place,GenreId")] Event @event)
+        [Authorize]
+        public ActionResult Edit( Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +120,7 @@ namespace Musical.Web.Controllers
         }
 
         // GET: Events/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,6 +138,7 @@ namespace Musical.Web.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Event @event = db.Events.Find(id);

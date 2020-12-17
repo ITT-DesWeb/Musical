@@ -19,6 +19,7 @@ namespace Musical.Web.Models
         public DateTime DateTime { get; set; }
         [Display(Name ="Lugar")]
         public string Place { get; set; }
+        public string Picture { get; set; }
         [Display(Name ="Genero")]
         public int GenreId { get; set; }
         [ForeignKey("GenreId")]

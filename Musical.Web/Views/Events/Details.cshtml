@@ -4,39 +4,47 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card">
+            @if (Model.Picture==null)
+            {
+               <img src = "https://cdn.pixabay.com/photo/2015/07/30/17/24/audience-868074_960_720.jpg" alt = "" class="img-fluid rounded" /> 
+            }
+            <img src="~/Upload/Evento/@Model.Picture" alt="" class="img-fluid rounded" />
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>Genero</td>
+                        <td>@Model.Genre.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Artista</td>
+                        <td>@Model.Artist.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha</td>
+                        <td>@Model.DateTime.ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td>Lugar</td>
+                        <td>@Model.Place</td>
+                    </tr>
+                </table>
+                <div class="row justify-content-center">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a href="@Url.Action("Edit","Events",new { id=Model.Id})" class="btn btn-sm btn-warning">Actualizar</a>
+                        <a href="@Url.Action("Index","Events")" class="btn btn-sm btn-primary ml-2">Regresar</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index","Home")" class="btn btn-sm btn-primary">Regresar</a>
+                    }
 
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Genre.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Place)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Place)
-        </dd>
-
-    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

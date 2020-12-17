@@ -14,9 +14,9 @@
                 <div class="row justify-content-between">
                     <div class="col-md-6">
                         <div class="card">
-                            <img src="~/Content/img/piano.jpg" alt="Picture" class="rounded img-fluid"/>
+                            <img src="~/Upload/@Model.Photo" alt="Picture" class="rounded img-fluid"/>
                             <form class="form-horizontal" action="@Url.Action("Picture","Profile")" method="post" enctype="multipart/form-data">
-                                <input type="file" value="" class="form-control" />
+                                <input type="file" value="" name="pic" class="form-control" />
                                 <input type="submit" value="Guardar Foto" class="form-control" />
                             </form>
                         </div>

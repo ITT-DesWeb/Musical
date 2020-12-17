@@ -4,53 +4,67 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Event</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header bg-primary py-1">
+                <h5 class="text-center m-0 text-white">Nuevo Evento</h5>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GenreId, "GenreId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("GenreId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.GenreId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="card-body">
+                <form class="" action="@Url.Action("Create","Events")" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label class="col-md-10">Artista</label>
+                        <div class="col-md-12">
+                            <select class="form-control" name="ApplicationUser" required>
+                                <option value="">Elige un Artista</option>
+                                @foreach (var item in ViewBag.User)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-10">Elige la fecha de tu evento</label>
+                        <div class="col-md-12">
+                            <input type="date" name="DateTime" value="" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-10">Lugar del Evento</label>
+                        <div class="col-md-12">
+                            <input type="text" name="Place" value="" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-10">Género</label>
+                        <div class="col-md-12">
+                            <select class="form-control" name="GenreId" required>
+                                <option value="">Elige un Genero</option>
+                                @foreach (var item in ViewBag.Genre)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6">Picture</label>
+                            <div class="col-md-12">
+                                <input name="file" type="file" value="" class="form-control form-control-file" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-sm btn-icon-split btn-primary"><span class="icon text-white-50"><i class="fas fa-save"></i></span><span class="text">Guardar</span></button>
+                        <a href="@Url.Action("Index","Events")" class="btn btn-sm btn-icon-split btn-danger ml-2"><span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span><span class="text">Cancelar</span></a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+
+
